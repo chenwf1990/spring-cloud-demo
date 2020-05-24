@@ -18,3 +18,31 @@ eureka:
       defaultZone: http://localhost:9000/eureka/
   instance:
     prefer-ip-address: true #使用ip注册
+    instance-id: ${spring.cloud.client.ip-address}:${server.port} #向注册中心中注册服务id
+feign:
+  client:
+    config:
+      service-product:
+        connectTimeout: 5000 # 相当于Request.Options
+        readTimeout: 5000 # 相当于Request.Options
+        #配置feign日志的输出
+        #日志配置  NONE : 不输出日志(高)   BASIC: 适用于生产环境追踪问题
+        #HEADERS : 在BASIC的基础上,记录请求和响应头信息   FULL : 记录所有
+        loggerLevel: full
+#        # Feign的错误解码器，相当于代码配置方式中的ErrorDecoder
+#        errorDecoder: com.example.SimpleErrorDecoder
+#        # 配置重试，相当于代码配置方式中的Retryer
+#        retryer: com.example.SimpleRetryer
+#        # 配置拦截器，相当于代码配置方式中的RequestInterceptor
+#        requestInterceptors:
+#          - com.example.FooRequestInterceptor
+#          - com.example.BarRequestInterceptor
+#        decode404: false
+  hystrix:
+    enabled: true
+#Hystrix DashBoard监控
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'  #暴露所有actuator监控的断路器

@@ -1,6 +1,7 @@
 package com.cwf.order.controller;
 
 import com.cwf.order.entity.Product;
+import com.cwf.order.feign.ProductFeginClient;
 import com.cwf.order.service.ProductService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,13 +22,14 @@ public class OrderController {
     @Resource
     private ProductService productService;
     @Resource
-    private RestTemplate restTemplate;
+    private ProductFeginClient productFeginClient;
 
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
     public Product findById(@PathVariable Long id, HttpServletRequest request){
 //        Product product = productService.findById(id);
-        Product product = restTemplate.getForObject("http://service-product/product/"+id,Product.class);
 //        Product product = restTemplate.getForObject("http://service-product/product/"+id,Product.class);
+//        Product product = restTemplate.getForObject("http://service-product/product/"+id,Product.class);
+        Product product = productFeginClient.findById(id);
         return product;
     }
 }

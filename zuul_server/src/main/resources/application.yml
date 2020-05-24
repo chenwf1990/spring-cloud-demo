@@ -1,0 +1,22 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: zuul-server
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9000/eureka/
+  instance:
+    prefer-ip-address: true #使用ip地址注册
+    instance-id: ${spring.cloud.client.ip-address}:${server.port} #向注册中心中注册服务id
+#路由配置
+zuul:
+  routes:
+    #商品微服务
+#    product-service:
+#      path: /product-service/** #映射路劲
+#      url: http://localhost:9001 #映射到对应地址
+#      serviceId: service-product
+    service-product: /service-product/** #如果路由id和对应的微服务的serviceId一致
+    service-order: /service-order/**

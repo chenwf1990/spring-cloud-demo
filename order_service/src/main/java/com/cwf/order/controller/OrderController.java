@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
  * @date 2020/5/20
  */
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/order")
 public class OrderController {
     @Resource
     private ProductService productService;
